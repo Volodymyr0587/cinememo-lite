@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="description" content="CineMemo Lite — a simple personal movie and series library.">
+
+        <title>CineMemo Lite</title>
+
+        <link rel="stylesheet" href="main.css">
+    </head>
+
+    <body>
+
+        <div class="app">
+
+            <header class="header">
+                <div class="brand">
+                    <div class="brand-icon">C</div>
+
+                    <div>
+                        <h1>CineMemo <span>Lite</span></h1>
+                        <p>Personal media library</p>
+                    </div>
+                </div>
+
+                <div class="header-stats">
+                    <span id="total-count">0</span>
+                    <small>titles</small>
+                </div>
+            </header>
+
+
+            <main>
+
+                <!-- Controls -->
+
+                <section class="controls">
+
+                    <div class="search-wrapper">
+                        <span class="search-icon">⌕</span>
+
+                        <input type="search" id="search" placeholder="Search movies, series, genres..."
+                            autocomplete="off">
+                    </div>
+
+
+                    <div class="filters">
+
+                        <div class="filter-group">
+                            <label for="type-filter">Type</label>
+
+                            <select id="type-filter">
+                                <option value="all">All types</option>
+                                <option value="Movie">Movies</option>
+                                <option value="Series">Series</option>
+                            </select>
+                        </div>
+
+
+                        <div class="filter-group">
+                            <label for="status-filter">Status</label>
+
+                            <select id="status-filter">
+                                <option value="all">All statuses</option>
+                                <option value="Watching">Watching</option>
+                                <option value="Watched">Watched</option>
+                                <option value="Will Watch">Will Watch</option>
+                                <option value="Waiting">Waiting</option>
+                            </select>
+                        </div>
+
+
+                        <div class="filter-group">
+                            <label for="sort-filter">Sort by</label>
+
+                            <select id="sort-filter">
+                                <option value="title-asc">Title A–Z</option>
+                                <option value="title-desc">Title Z–A</option>
+                                <option value="year-desc">Newest first</option>
+                                <option value="year-asc">Oldest first</option>
+                                <option value="rating-desc">Highest rated</option>
+                                <option value="rating-asc">Lowest rated</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Result information -->
+
+                <section class="result-bar">
+
+                    <div>
+                        <span id="result-count">0</span>
+                        <span class="muted">results</span>
+                    </div>
+
+                    <button id="clear-filters" class="clear-button" type="button">
+                        Clear filters
+                    </button>
+
+                </section>
+
+
+                <!-- Media list -->
+
+                <section id="media-list" class="media-list">
+                    <div class="loading">
+                        Loading your library...
+                    </div>
+                </section>
+
+
+                <!-- Empty state -->
+
+                <section id="empty-state" class="empty-state hidden">
+                    <div class="empty-icon">⌕</div>
+
+                    <h2>No titles found</h2>
+
+                    <p>
+                        Try changing your search or filters.
+                    </p>
+                </section>
+
+            </main>
+
+
+            <footer class="footer">
+                <span>CineMemo Lite</span>
+                <span>•</span>
+                <span>Static JSON library</span>
+            </footer>
+
+        </div>
+
+
+        <script src="script.js"></script>
+
+    </body>
+
+</html>
