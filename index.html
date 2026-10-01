@@ -5,8 +5,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <meta name="description" content="CineMemo Lite — a simple personal movie and series library.">
-
         <title>CineMemo Lite</title>
 
         <link rel="stylesheet" href="main.css">
@@ -14,130 +12,116 @@
 
     <body>
 
-        <div class="app">
+        <header class="header">
+            <div class="brand">
+                <div class="brand-icon">🎬</div>
 
-            <header class="header">
-                <div class="brand">
-                    <div class="brand-icon">C</div>
+                <div>
+                    <h1>
+                        CineMemo <span>Lite</span>
+                    </h1>
 
-                    <div>
-                        <h1>CineMemo <span>Lite</span></h1>
-                        <p>Personal media library</p>
-                    </div>
+                    <p>Your personal movie &amp; series library</p>
+                </div>
+            </div>
+
+            <div class="header-stats">
+                <span id="total-count">0</span>
+                <small>titles</small>
+            </div>
+        </header>
+
+
+        <main class="container">
+
+            <section class="controls">
+
+                <div class="search-wrapper">
+                    <label for="search" class="sr-only">
+                        Search library
+                    </label>
+
+                    <input type="search" id="search" class="search-input" placeholder="Search movies and series..."
+                        autocomplete="off">
                 </div>
 
-                <div class="header-stats">
-                    <span id="total-count">0</span>
-                    <small>titles</small>
-                </div>
-            </header>
+
+                <div class="filter-group">
+
+                    <label for="type-filter" class="sr-only">
+                        Filter by type
+                    </label>
+
+                    <select id="type-filter" class="filter-select">
+                        <option value="">All types</option>
+                        <option value="Movie">Movies</option>
+                        <option value="Series">Series</option>
+                    </select>
 
 
-            <main>
+                    <label for="status-filter" class="sr-only">
+                        Filter by status
+                    </label>
 
-                <!-- Controls -->
-
-                <section class="controls">
-
-                    <div class="search-wrapper">
-                        <span class="search-icon">⌕</span>
-
-                        <input type="search" id="search" placeholder="Search movies, series, genres..."
-                            autocomplete="off">
-                    </div>
-
-
-                    <div class="filters">
-
-                        <div class="filter-group">
-                            <label for="type-filter">Type</label>
-
-                            <select id="type-filter">
-                                <option value="all">All types</option>
-                                <option value="Movie">Movies</option>
-                                <option value="Series">Series</option>
-                            </select>
-                        </div>
+                    <select id="status-filter" class="filter-select">
+                        <option value="">All statuses</option>
+                        <option value="Watching">Watching</option>
+                        <option value="Watched">Watched</option>
+                        <option value="Will Watch">Will Watch</option>
+                        <option value="Waiting">Waiting</option>
+                    </select>
 
 
-                        <div class="filter-group">
-                            <label for="status-filter">Status</label>
+                    <label for="sort-filter" class="sr-only">
+                        Sort library
+                    </label>
 
-                            <select id="status-filter">
-                                <option value="all">All statuses</option>
-                                <option value="Watching">Watching</option>
-                                <option value="Watched">Watched</option>
-                                <option value="Will Watch">Will Watch</option>
-                                <option value="Waiting">Waiting</option>
-                            </select>
-                        </div>
-
-
-                        <div class="filter-group">
-                            <label for="sort-filter">Sort by</label>
-
-                            <select id="sort-filter">
-                                <option value="title-asc">Title A–Z</option>
-                                <option value="title-desc">Title Z–A</option>
-                                <option value="year-desc">Newest first</option>
-                                <option value="year-asc">Oldest first</option>
-                                <option value="rating-desc">Highest rated</option>
-                                <option value="rating-asc">Lowest rated</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                </section>
+                    <select id="sort-filter" class="filter-select">
+                        <option value="title-asc">Title A–Z</option>
+                        <option value="title-desc">Title Z–A</option>
+                        <option value="year-desc">Newest first</option>
+                        <option value="year-asc">Oldest first</option>
+                        <option value="rating-desc">Highest rating</option>
+                        <option value="rating-asc">Lowest rating</option>
+                    </select>
 
 
-                <!-- Result information -->
-
-                <section class="result-bar">
-
-                    <div>
-                        <span id="result-count">0</span>
-                        <span class="muted">results</span>
-                    </div>
-
-                    <button id="clear-filters" class="clear-button" type="button">
-                        Clear filters
+                    <button type="button" id="clear-filters" class="clear-button">
+                        Clear
                     </button>
 
-                </section>
+                </div>
+
+            </section>
 
 
-                <!-- Media list -->
+            <section class="result-bar">
 
-                <section id="media-list" class="media-list">
-                    <div class="loading">
-                        Loading your library...
-                    </div>
-                </section>
+                <div>
+                    Showing
+                    <strong id="result-count">0</strong>
+                    of
+                    <strong id="result-total">0</strong>
+                    titles
+                </div>
 
-
-                <!-- Empty state -->
-
-                <section id="empty-state" class="empty-state hidden">
-                    <div class="empty-icon">⌕</div>
-
-                    <h2>No titles found</h2>
-
-                    <p>
-                        Try changing your search or filters.
-                    </p>
-                </section>
-
-            </main>
+            </section>
 
 
-            <footer class="footer">
-                <span>CineMemo Lite</span>
-                <span>•</span>
-                <span>Static JSON library</span>
-            </footer>
+            <section id="media-list" class="media-list" aria-live="polite"></section>
 
-        </div>
+
+            <section id="empty-state" class="empty-state hidden">
+                <div class="empty-icon">🎬</div>
+
+                <h2>No titles found</h2>
+
+                <p>
+                    Try changing your search or filters.
+                </p>
+            </section>
+
+        </main>
 
 
         <script src="script.js"></script>

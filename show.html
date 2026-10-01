@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>CineMemo Lite</title>
+
+        <link rel="stylesheet" href="main.css">
+    </head>
+
+    <body>
+
+        <header class="header">
+            <div class="brand">
+                <div class="brand-icon">🎬</div>
+
+                <div>
+                    <h1>
+                        CineMemo <span>Lite</span>
+                    </h1>
+
+                    <p>Your personal movie &amp; series library</p>
+                </div>
+            </div>
+        </header>
+
+
+        <main class="container show-page" id="show-page">
+
+            <a href="index.html" class="back-link">
+                <span>←</span>
+                Back to library
+            </a>
+
+
+            <section class="show-card">
+
+                <div class="show-poster-wrapper">
+
+                    <img id="show-poster" class="show-poster" src="assets/images/placeholder.jpg" alt="">
+
+                </div>
+
+
+                <div class="show-content">
+
+                    <div class="show-heading">
+
+                        <div>
+
+                            <div class="show-meta">
+                                <span id="show-type"></span>
+
+                                <span class="meta-separator">·</span>
+
+                                <span id="show-year"></span>
+                            </div>
+
+
+                            <h1 id="show-title"></h1>
+
+                        </div>
+
+
+                        <div id="show-rating" class="show-rating"></div>
+
+                    </div>
+
+
+                    <div class="show-status-row">
+
+                        <span id="show-status" class="status"></span>
+
+                    </div>
+
+
+                    <div id="show-genres" class="show-genres"></div>
+
+
+                    <div class="show-description">
+
+                        <h2>Description</h2>
+
+                        <p id="show-description"></p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <div id="show-not-found" class="empty-state container hidden">
+
+            <div class="empty-icon">🎬</div>
+
+            <h2>Title not found</h2>
+
+            <p>
+                The requested movie or series does not exist
+                in the library.
+            </p>
+
+            <a href="index.html" class="back-button">
+                Back to library
+            </a>
+
+        </div>
+
+
+        <script src="script.js"></script>
+
+    </body>
+
+</html>

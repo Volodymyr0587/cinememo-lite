@@ -1,70 +1,118 @@
+const PLACEHOLDER_IMAGE = "assets/images/placeholder.jpg";
+
 const state = {
     items: [],
     filteredItems: [],
 };
 
-const elements = {
-    mediaList: document.querySelector("#media-list"),
-    emptyState: document.querySelector("#empty-state"),
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.querySelector("#show-page")) {
+        initShowPage();
 
-    search: document.querySelector("#search"),
-    typeFilter: document.querySelector("#type-filter"),
-    statusFilter: document.querySelector("#status-filter"),
-    sortFilter: document.querySelector("#sort-filter"),
+        return;
+    }
 
-    resultCount: document.querySelector("#result-count"),
-    totalCount: document.querySelector("#total-count"),
-
-    clearFilters: document.querySelector("#clear-filters"),
-};
+    if (document.querySelector("#media-list")) {
+        initLibraryPage();
+    }
+});
 
 /*
 |--------------------------------------------------------------------------
-| Load data
+| Shared
 |--------------------------------------------------------------------------
 */
 
 async function loadData() {
+    const response = await fetch("data.json");
+
+    if (!response.ok) {
+        throw new Error("Failed to load data.json");
+    }
+
+    return response.json();
+}
+
+function getImage(image) {
+    return image && image.trim() ? image : PLACEHOLDER_IMAGE;
+}
+
+function getStatusClass(status) {
+    return String(status).toLowerCase().replace(/\s+/g, "-");
+}
+
+function escapeHtml(value) {
+    const div = document.createElement("div");
+
+    div.textContent = value ?? "";
+
+    return div.innerHTML;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Library page
+|--------------------------------------------------------------------------
+*/
+
+async function initLibraryPage() {
+    const elements = {
+        search: document.querySelector("#search"),
+        typeFilter: document.querySelector("#type-filter"),
+        statusFilter: document.querySelector("#status-filter"),
+        sortFilter: document.querySelector("#sort-filter"),
+        clearFilters: document.querySelector("#clear-filters"),
+
+        resultCount: document.querySelector("#result-count"),
+        resultTotal: document.querySelector("#result-total"),
+        totalCount: document.querySelector("#total-count"),
+
+        mediaList: document.querySelector("#media-list"),
+        emptyState: document.querySelector("#empty-state"),
+    };
+
     try {
-        const response = await fetch("data.json");
-
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-
-        state.items = await response.json();
-
+        state.items = await loadData();
         state.filteredItems = [...state.items];
 
         elements.totalCount.textContent = state.items.length;
+        elements.resultTotal.textContent = state.items.length;
 
-        render();
+        sortItems(elements);
+        renderLibrary(elements);
+
+        elements.search.addEventListener("input", () => {
+            filterItems(elements);
+        });
+
+        elements.typeFilter.addEventListener("change", () => {
+            filterItems(elements);
+        });
+
+        elements.statusFilter.addEventListener("change", () => {
+            filterItems(elements);
+        });
+
+        elements.sortFilter.addEventListener("change", () => {
+            filterItems(elements);
+        });
+
+        elements.clearFilters.addEventListener("click", () => {
+            clearFilters(elements);
+        });
     } catch (error) {
-        console.error("Failed to load data:", error);
+        console.error(error);
 
         elements.mediaList.innerHTML = `
-            <div class="error-state">
-                <div class="error-icon">!</div>
-
-                <h2>Unable to load library</h2>
-
-                <p>
-                    Make sure <strong>data.json</strong> exists
-                    and the project is running through a local server.
-                </p>
+            <div class="error-message">
+                Failed to load library.
             </div>
         `;
     }
 }
 
-/*
-|--------------------------------------------------------------------------
-| Filtering
-|--------------------------------------------------------------------------
-*/
-
-function filterItems() {
-    const search = elements.search.value.trim().toLowerCase();
+function filterItems(elements) {
+    const searchTerm = elements.search.value.trim().toLowerCase();
 
     const type = elements.typeFilter.value;
     const status = elements.statusFilter.value;
@@ -80,25 +128,21 @@ function filterItems() {
             .join(" ")
             .toLowerCase();
 
-        const matchesSearch = search === "" || searchableText.includes(search);
+        const matchesSearch =
+            !searchTerm || searchableText.includes(searchTerm);
 
-        const matchesType = type === "all" || item.type === type;
+        const matchesType = !type || item.type === type;
 
-        const matchesStatus = status === "all" || item.status === status;
+        const matchesStatus = !status || item.status === status;
 
         return matchesSearch && matchesType && matchesStatus;
     });
 
-    sortItems();
+    sortItems(elements);
+    renderLibrary(elements);
 }
 
-/*
-|--------------------------------------------------------------------------
-| Sorting
-|--------------------------------------------------------------------------
-*/
-
-function sortItems() {
+function sortItems(elements) {
     const sort = elements.sortFilter.value;
 
     state.filteredItems.sort((a, b) => {
@@ -125,17 +169,9 @@ function sortItems() {
                 return 0;
         }
     });
-
-    render();
 }
 
-/*
-|--------------------------------------------------------------------------
-| Render
-|--------------------------------------------------------------------------
-*/
-
-function render() {
+function renderLibrary(elements) {
     elements.resultCount.textContent = state.filteredItems.length;
 
     if (state.filteredItems.length === 0) {
@@ -153,93 +189,105 @@ function render() {
         .join("");
 }
 
-/*
-|--------------------------------------------------------------------------
-| Render item
-|--------------------------------------------------------------------------
-*/
-
 function renderItem(item, index) {
-    const rating = item.rating
-        ? `
-            <div class="rating">
-                <span class="star">★</span>
-                <span>${item.rating}</span>
-            </div>
-        `
-        : `
-            <div class="rating rating-empty">
-                <span>—</span>
-            </div>
-        `;
+    const image = getImage(item.image);
 
     const genres = (item.genres ?? [])
-        .map((genre) => `<span class="genre">${escapeHtml(genre)}</span>`)
+        .map(
+            (genre) => `
+            <span class="genre">
+                ${escapeHtml(genre)}
+            </span>
+        `,
+        )
         .join("");
 
-    const statusClass = getStatusClass(item.status);
+    const rating =
+        item.rating !== null && item.rating !== undefined
+            ? `
+                <span class="rating">
+                    ★ ${escapeHtml(item.rating)}
+                </span>
+            `
+            : "";
 
     return `
         <article class="media-item">
 
             <div class="media-index">
-                ${String(index + 1).padStart(2, "0")}
+                ${index + 1}
             </div>
+
+
+            <a
+                href="show.html?id=${encodeURIComponent(item.id)}"
+                class="media-poster-link"
+                aria-label="Open ${escapeHtml(item.title)}"
+            >
+
+                <img
+                    class="media-poster"
+                    src="${escapeHtml(image)}"
+                    alt="${escapeHtml(item.title)} poster"
+                    loading="lazy"
+                    onerror="
+                        this.onerror = null;
+                        this.src = '${PLACEHOLDER_IMAGE}';
+                    "
+                >
+
+            </a>
 
 
             <div class="media-content">
 
-                <div class="media-main">
+                <div class="media-title-row">
 
-                    <div class="title-row">
+                    <h2 class="media-title">
 
-                        <h2>
+                        <a
+                            href="show.html?id=${encodeURIComponent(item.id)}"
+                        >
                             ${escapeHtml(item.title)}
-                        </h2>
+                        </a>
 
-                        <span class="year">
-                            ${item.year ?? "—"}
-                        </span>
-
-                    </div>
+                    </h2>
 
 
-                    <div class="meta">
-
-                        <span class="type">
-                            ${escapeHtml(item.type)}
-                        </span>
-
-                        <span class="dot">•</span>
-
-                        <span class="status ${statusClass}">
-                            ${escapeHtml(item.status)}
-                        </span>
-
-                    </div>
-
-
-                    <div class="genres">
-                        ${genres}
-                    </div>
-
-
-                    ${
-                        item.description
-                            ? `
-                                <p class="description">
-                                    ${escapeHtml(item.description)}
-                                </p>
-                            `
-                            : ""
-                    }
+                    <span class="media-year">
+                        ${escapeHtml(item.year)}
+                    </span>
 
                 </div>
 
 
-                <div class="media-rating">
+                <div class="media-meta">
+
+                    <span class="media-type">
+                        ${escapeHtml(item.type)}
+                    </span>
+
+
+                    <span
+                        class="status ${getStatusClass(item.status)}"
+                    >
+                        ${escapeHtml(item.status)}
+                    </span>
+
+
                     ${rating}
+
                 </div>
+
+
+                <div class="genres">
+                    ${genres}
+                </div>
+
+
+                <p class="media-description">
+                    ${escapeHtml(item.description)}
+                </p>
 
             </div>
 
@@ -247,84 +295,118 @@ function renderItem(item, index) {
     `;
 }
 
+function clearFilters(elements) {
+    elements.search.value = "";
+    elements.typeFilter.value = "";
+    elements.statusFilter.value = "";
+    elements.sortFilter.value = "title-asc";
+
+    state.filteredItems = [...state.items];
+
+    sortItems(elements);
+    renderLibrary(elements);
+}
+
 /*
 |--------------------------------------------------------------------------
-| Status classes
+| Show page
 |--------------------------------------------------------------------------
 */
 
-function getStatusClass(status) {
-    switch (status) {
-        case "Watched":
-            return "status-watched";
+async function initShowPage() {
+    const elements = {
+        page: document.querySelector("#show-page"),
+        notFound: document.querySelector("#show-not-found"),
 
-        case "Watching":
-            return "status-watching";
+        poster: document.querySelector("#show-poster"),
+        title: document.querySelector("#show-title"),
+        type: document.querySelector("#show-type"),
+        year: document.querySelector("#show-year"),
+        status: document.querySelector("#show-status"),
+        rating: document.querySelector("#show-rating"),
+        genres: document.querySelector("#show-genres"),
+        description: document.querySelector("#show-description"),
+    };
 
-        case "Will Watch":
-            return "status-will-watch";
+    try {
+        const items = await loadData();
 
-        case "Waiting":
-            return "status-waiting";
+        const params = new URLSearchParams(window.location.search);
 
-        default:
-            return "";
+        const id = params.get("id");
+
+        const item = items.find((item) => String(item.id) === String(id));
+
+        if (!item) {
+            showNotFound(elements);
+
+            return;
+        }
+
+        renderShow(item, elements);
+    } catch (error) {
+        console.error(error);
+
+        showNotFound(elements);
     }
 }
 
-/*
-|--------------------------------------------------------------------------
-| Clear filters
-|--------------------------------------------------------------------------
-*/
+function renderShow(item, elements) {
+    document.title = `${item.title} — CineMemo Lite`;
 
-function clearFilters() {
-    elements.search.value = "";
+    elements.poster.src = getImage(item.image);
 
-    elements.typeFilter.value = "all";
+    elements.poster.alt = `${item.title} poster`;
 
-    elements.statusFilter.value = "all";
+    elements.poster.onerror = () => {
+        elements.poster.onerror = null;
+        elements.poster.src = PLACEHOLDER_IMAGE;
+    };
 
-    elements.sortFilter.value = "title-asc";
+    elements.title.textContent = item.title;
 
-    filterItems();
+    elements.type.textContent = item.type;
+
+    elements.year.textContent = item.year;
+
+    elements.status.textContent = item.status;
+
+    elements.status.className = `status ${getStatusClass(item.status)}`;
+
+    if (item.rating !== null && item.rating !== undefined) {
+        elements.rating.innerHTML = `
+            <span class="rating-star">★</span>
+
+            <span>
+                ${escapeHtml(item.rating)}
+            </span>
+
+            <small>/ 10</small>
+        `;
+
+        elements.rating.classList.remove("hidden");
+    } else {
+        elements.rating.innerHTML = "";
+        elements.rating.classList.add("hidden");
+    }
+
+    elements.genres.innerHTML = (item.genres ?? [])
+        .map(
+            (genre) => `
+                <span class="genre">
+                    ${escapeHtml(genre)}
+                </span>
+            `,
+        )
+        .join("");
+
+    elements.description.textContent = item.description ?? "";
 }
 
-/*
-|--------------------------------------------------------------------------
-| HTML escaping
-|--------------------------------------------------------------------------
-*/
+function showNotFound(elements) {
+    elements.page.classList.add("hidden");
 
-function escapeHtml(value) {
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    elements.notFound.classList.remove("hidden");
+
+    document.title = "Title not found — CineMemo Lite";
 }
-
-/*
-|--------------------------------------------------------------------------
-| Events
-|--------------------------------------------------------------------------
-*/
-
-elements.search.addEventListener("input", filterItems);
-
-elements.typeFilter.addEventListener("change", filterItems);
-
-elements.statusFilter.addEventListener("change", filterItems);
-
-elements.sortFilter.addEventListener("change", filterItems);
-
-elements.clearFilters.addEventListener("click", clearFilters);
-
-/*
-|--------------------------------------------------------------------------
-| Start application
-|--------------------------------------------------------------------------
-*/
-
-loadData();
