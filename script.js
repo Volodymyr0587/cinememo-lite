@@ -27,10 +27,16 @@ async function loadData() {
     const response = await fetch("data.json");
 
     if (!response.ok) {
-        throw new Error("Failed to load data.json");
+        throw new Error(`Failed to load data.json: ${response.status}`);
     }
 
-    return response.json();
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+        throw new Error("data.json must contain an array.");
+    }
+
+    return data;
 }
 
 function getImage(image) {
@@ -75,8 +81,10 @@ async function initLibraryPage() {
         state.items = await loadData();
         state.filteredItems = [...state.items];
 
-        elements.totalCount.textContent = state.items.length;
-        elements.resultTotal.textContent = state.items.length;
+        updateLibraryStats(elements);
+
+        populateTypeFilter(elements.typeFilter);
+        populateStatusFilter(elements.statusFilter);
 
         sortItems(elements);
         renderLibrary(elements);
@@ -111,6 +119,81 @@ async function initLibraryPage() {
     }
 }
 
+/*
+|--------------------------------------------------------------------------
+| Dynamic filters
+|--------------------------------------------------------------------------
+*/
+
+function populateTypeFilter(select) {
+    const types = getUniqueValues("type");
+
+    select.innerHTML = "";
+
+    addDefaultOption(select, "All types");
+
+    types.forEach((type) => {
+        const option = document.createElement("option");
+
+        option.value = type;
+        option.textContent = getTypeLabel(type);
+
+        select.appendChild(option);
+    });
+}
+
+function populateStatusFilter(select) {
+    const statuses = getUniqueValues("status");
+
+    select.innerHTML = "";
+
+    addDefaultOption(select, "All statuses");
+
+    statuses.forEach((status) => {
+        const option = document.createElement("option");
+
+        option.value = status;
+        option.textContent = status;
+
+        select.appendChild(option);
+    });
+}
+
+function addDefaultOption(select, label) {
+    const option = document.createElement("option");
+
+    option.value = "";
+    option.textContent = label;
+
+    select.appendChild(option);
+}
+
+function getUniqueValues(property) {
+    return [
+        ...new Set(
+            state.items
+                .map((item) => item[property])
+                .filter((value) => value !== null && value !== undefined),
+        ),
+    ].sort((a, b) => a.localeCompare(b));
+}
+
+function getTypeLabel(type) {
+    const labels = {
+        Movie: "Movies",
+        Series: "Series",
+        Anime: "Anime",
+    };
+
+    return labels[type] ?? type;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Filtering
+|--------------------------------------------------------------------------
+*/
+
 function filterItems(elements) {
     const searchTerm = elements.search.value.trim().toLowerCase();
 
@@ -142,6 +225,12 @@ function filterItems(elements) {
     renderLibrary(elements);
 }
 
+/*
+|--------------------------------------------------------------------------
+| Sorting
+|--------------------------------------------------------------------------
+*/
+
 function sortItems(elements) {
     const sort = elements.sortFilter.value;
 
@@ -169,6 +258,18 @@ function sortItems(elements) {
                 return 0;
         }
     });
+}
+
+/*
+|--------------------------------------------------------------------------
+| Library rendering
+|--------------------------------------------------------------------------
+*/
+
+function updateLibraryStats(elements) {
+    elements.totalCount.textContent = state.items.length;
+
+    elements.resultTotal.textContent = state.items.length;
 }
 
 function renderLibrary(elements) {

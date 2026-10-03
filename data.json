@@ -97,5 +97,27 @@
         "genres": ["Drama"],
         "rating": null,
         "description": "This title intentionally has no image and will use the default placeholder."
+    },
+    {
+        "id": 10,
+        "title": "Some Anime Without Poster",
+        "type": "Anime",
+        "year": 2022,
+        "status": "Will Watch",
+        "image": null,
+        "genres": ["Comedy"],
+        "rating": null,
+        "description": "This title intentionally has no image and will use the default placeholder."
+    },
+    {
+        "id": 11,
+        "title": "Some Documentary Without Poster",
+        "type": "Documentary",
+        "year": 2022,
+        "status": "Will Watch",
+        "image": null,
+        "genres": ["History"],
+        "rating": null,
+        "description": "This title intentionally has no image and will use the default placeholder."
     }
 ]
