@@ -1,123 +1,18 @@
 [
     {
-        "id": 1,
-        "title": "Stranger Things",
+        "title": "Slow Horses",
         "type": "Series",
-        "year": 2016,
-        "status": "Watched",
-        "image": "assets/images/stranger-things.jpg",
-        "genres": ["Drama", "Fantasy", "Horror"],
-        "rating": 9,
-        "description": "A group of young friends uncover supernatural mysteries in their hometown."
-    },
-    {
-        "id": 2,
-        "title": "Interstellar",
-        "type": "Movie",
-        "year": 2014,
-        "status": "Watched",
-        "image": "assets/images/interstellar.jpg",
-        "genres": ["Drama", "Sci-Fi"],
-        "rating": 10,
-        "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
-    },
-    {
-        "id": 3,
-        "title": "The Last of Us",
-        "type": "Series",
-        "year": 2023,
-        "status": "Watching",
-        "image": "assets/images/the-last-of-us.jpg",
-        "genres": ["Drama", "Action"],
-        "rating": null,
-        "description": "A smuggler and a teenage girl travel across a post-apocalyptic United States."
-    },
-    {
-        "id": 4,
-        "title": "Dune: Part Two",
-        "type": "Movie",
-        "year": 2024,
-        "status": "Watched",
-        "image": "assets/images/dune-part-two.jpg",
-        "genres": ["Sci-Fi", "Adventure", "Drama"],
-        "rating": 9,
-        "description": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family."
-    },
-    {
-        "id": 5,
-        "title": "Breaking Bad",
-        "type": "Series",
-        "year": 2008,
-        "status": "Watched",
-        "image": "assets/images/breaking-bad.jpg",
-        "genres": ["Crime", "Drama", "Thriller"],
-        "rating": 10,
-        "description": "A chemistry teacher diagnosed with cancer turns to manufacturing methamphetamine to secure his family's future."
-    },
-    {
-        "id": 6,
-        "title": "The Lord of the Rings: The Fellowship of the Ring",
-        "type": "Movie",
-        "year": 2001,
-        "status": "Will Watch",
-        "image": "assets/images/lord-of-the-rings-fellowship.jpg",
-        "genres": ["Fantasy", "Adventure", "Drama"],
-        "rating": null,
-        "description": "A young hobbit begins an epic journey to destroy a powerful ring before it falls into the hands of its creator."
-    },
-    {
-        "id": 7,
-        "title": "Dark",
-        "type": "Series",
-        "year": 2017,
-        "status": "Watching",
-        "image": "assets/images/dark.jpg",
-        "genres": ["Drama", "Mystery", "Sci-Fi"],
-        "rating": null,
-        "description": "A missing child sets four families on a frantic search for answers as a mystery spanning generations unfolds."
-    },
-    {
-        "id": 8,
-        "title": "Blade Runner 2049",
-        "type": "Movie",
-        "year": 2017,
-        "status": "Waiting",
-        "image": "assets/images/blade-runner-2049.jpg",
-        "genres": ["Sci-Fi", "Drama", "Mystery"],
-        "rating": null,
-        "description": "A young blade runner uncovers a long-buried secret that leads him to track down former LAPD blade runner Rick Deckard."
-    },
-    {
-        "id": 9,
-        "title": "Some Movie Without Poster",
-        "type": "Movie",
-        "year": 2025,
-        "status": "Will Watch",
-        "image": null,
-        "genres": ["Drama"],
-        "rating": null,
-        "description": "This title intentionally has no image and will use the default placeholder."
-    },
-    {
-        "id": 10,
-        "title": "Some Anime Without Poster",
-        "type": "Anime",
         "year": 2022,
-        "status": "Will Watch",
-        "image": null,
-        "genres": ["Comedy"],
-        "rating": null,
-        "description": "This title intentionally has no image and will use the default placeholder."
-    },
-    {
-        "id": 11,
-        "title": "Some Documentary Without Poster",
-        "type": "Documentary",
-        "year": 2022,
-        "status": "Will Watch",
-        "image": null,
-        "genres": ["History"],
-        "rating": null,
-        "description": "This title intentionally has no image and will use the default placeholder."
+        "status": "Watching",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSGkHJlvLNahqbf0weSngkgowy2YMINuLcJLzsxOvjkw&s",
+        "genres": [
+            "Dark Comedy",
+            "Thriller",
+            "Spy",
+            "Drama",
+            "Psychological Thriller"
+        ],
+        "description": "A dysfunctional team of MI5 agents navigate the espionage world's smoke and mirrors to defend the UK from sinister forces.",
+        "id": 1
     }
 ]
