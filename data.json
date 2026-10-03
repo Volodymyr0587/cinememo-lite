@@ -16,13 +16,28 @@
         "id": 1
     },
     {
-        "title": "Frieren",
-        "type": "Anime",
-        "year": null,
-        "status": "Watched",
-        "image": "https://www.themoviedb.org/t/p/w1280/dqZENchTd7lp5zht7BdlqM7RBhD.jpg",
-        "genres": [],
-        "description": "",
+        "title": "East of Eden",
+        "type": "Series",
+        "year": 2026,
+        "status": "Will Watch",
+        "image": "https://www.themoviedb.org/t/p/w1280/axdUor6gLMTrrB1UF4Qfy0TTSyX.jpg",
+        "genres": [
+            "Drama",
+            "History"
+        ],
+        "description": "In the early 1900s, a fiercely independent woman drives a rift between two brothers, igniting a saga that unfolds across two generations.",
         "id": 2
+    },
+    {
+        "title": "Brothers 1 season",
+        "type": "Series",
+        "year": 2026,
+        "status": "Watching",
+        "image": "https://www.themoviedb.org/t/p/w1280/jD7ZQpDEZzAVReJzkOtmuFoIl2m.jpg",
+        "genres": [
+            "Comedy"
+        ],
+        "description": "Hollywood actors Matthew McConaughey and Woody Harrelson have been best friends for years, but a shocking family secret suggests their connection might be closer.",
+        "id": 3
     }
 ]
