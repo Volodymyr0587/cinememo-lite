@@ -4,7 +4,7 @@
         "type": "Series",
         "year": 2022,
         "status": "Watching",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSGkHJlvLNahqbf0weSngkgowy2YMINuLcJLzsxOvjkw&s",
+        "image": "https://www.themoviedb.org/t/p/w1280/AdYr4DjOgXvDUMwu6vEhZy1Rnxk.jpg",
         "genres": [
             "Dark Comedy",
             "Thriller",
@@ -14,5 +14,15 @@
         ],
         "description": "A dysfunctional team of MI5 agents navigate the espionage world's smoke and mirrors to defend the UK from sinister forces.",
         "id": 1
+    },
+    {
+        "title": "Frieren",
+        "type": "Anime",
+        "year": null,
+        "status": "Watched",
+        "image": "https://www.themoviedb.org/t/p/w1280/dqZENchTd7lp5zht7BdlqM7RBhD.jpg",
+        "genres": [],
+        "description": "",
+        "id": 2
     }
 ]
