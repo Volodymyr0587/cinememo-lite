@@ -894,6 +894,90 @@ img {
 
 /*
 |--------------------------------------------------------------------------
+| YouTube trailer
+|--------------------------------------------------------------------------
+*/
+
+.trailer-card {
+    margin-top: 24px;
+
+    padding: 26px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(155, 108, 255, 0.035),
+            rgba(255, 255, 255, 0.01)
+        ),
+        var(--surface);
+
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+}
+
+.trailer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 18px;
+}
+
+.trailer-header h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.trailer-link {
+    color: var(--purple-light);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: color var(--transition);
+}
+
+.trailer-link:hover {
+    color: var(--text);
+}
+
+.trailer-player {
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    aspect-ratio: 16 / 9;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: #000;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.28);
+}
+
+.trailer-player iframe {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
 | Responsive
 |--------------------------------------------------------------------------
 */
@@ -1039,6 +1123,20 @@ img {
         padding: 16px;
 
         border-radius: 10px;
+    }
+
+    .trailer-card {
+        padding: 16px;
+
+        border-radius: 10px;
+    }
+
+    .trailer-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 7px;
     }
 
     .show-heading {

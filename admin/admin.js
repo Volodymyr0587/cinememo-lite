@@ -64,6 +64,8 @@ const genresInput = document.querySelector("#genres");
 
 const imageInput = document.querySelector("#image");
 
+const youtubeUrlInput = document.querySelector("#youtube-url");
+
 const descriptionInput = document.querySelector("#description");
 
 const posterPreview = document.querySelector("#poster-preview");
@@ -441,6 +443,8 @@ function openEditModal(id) {
 
     imageInput.value = item.image || "";
 
+    youtubeUrlInput.value = item.youtube_url || "";
+
     descriptionInput.value = item.description || "";
 
     modalTitle.textContent = "Edit Content";
@@ -491,6 +495,14 @@ async function handleFormSubmit(event) {
         showToast("Please select a status.", "error");
 
         statusInput.focus();
+
+        return;
+    }
+
+    if (content.youtube_url && !getYouTubeVideoId(content.youtube_url)) {
+        showToast("Please enter a valid YouTube URL.", "error");
+
+        youtubeUrlInput.focus();
 
         return;
     }
@@ -563,6 +575,8 @@ function getFormData() {
         status: statusInput.value,
 
         image: imageInput.value.trim() || null,
+
+        youtube_url: youtubeUrlInput.value.trim() || null,
 
         genres,
 
@@ -730,6 +744,53 @@ function getImagePath(image) {
     }
 
     return `/${imagePath}`;
+}
+
+function getYouTubeVideoId(url) {
+    if (!url || typeof url !== "string") {
+        return null;
+    }
+
+    let parsedUrl;
+
+    try {
+        parsedUrl = new URL(url.trim());
+    } catch {
+        return null;
+    }
+
+    const hostname = parsedUrl.hostname.toLowerCase().replace(/^www\\./, "");
+
+    if (hostname === "youtu.be") {
+        const videoId = parsedUrl.pathname.split("/").filter(Boolean)[0];
+
+        return isValidYouTubeVideoId(videoId) ? videoId : null;
+    }
+
+    if (hostname !== "youtube.com" && hostname !== "youtube-nocookie.com") {
+        return null;
+    }
+
+    let videoId = null;
+
+    if (parsedUrl.pathname === "/watch") {
+        videoId = parsedUrl.searchParams.get("v");
+    } else {
+        const pathParts = parsedUrl.pathname.split("/").filter(Boolean);
+
+        if (
+            pathParts.length >= 2 &&
+            ["embed", "shorts", "live"].includes(pathParts[0])
+        ) {
+            videoId = pathParts[1];
+        }
+    }
+
+    return isValidYouTubeVideoId(videoId) ? videoId : null;
+}
+
+function isValidYouTubeVideoId(videoId) {
+    return typeof videoId === "string" && /^[A-Za-z0-9_-]{11}$/.test(videoId);
 }
 
 function getStatusClass(status) {

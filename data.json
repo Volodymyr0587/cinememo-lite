@@ -5,6 +5,7 @@
         "year": 2022,
         "status": "Watching",
         "image": "https://www.themoviedb.org/t/p/w1280/AdYr4DjOgXvDUMwu6vEhZy1Rnxk.jpg",
+        "youtube_url": "https://youtu.be/A9BCtrziWtg",
         "genres": [
             "Dark Comedy",
             "Thriller",
@@ -46,6 +47,7 @@
         "year": 2026,
         "status": "Watching",
         "image": "https://www.themoviedb.org/t/p/w1280/sJZcy8QsOPuRPiCfoCWVB3r9Ohg.jpg",
+        "youtube_url": "https://youtu.be/P_Cd6pvp1C8",
         "genres": [
             "Drama",
             "Romance",
