@@ -3,7 +3,7 @@
         "title": "Slow Horses",
         "type": "Series",
         "year": 2022,
-        "status": "Watching",
+        "status": "Watched",
         "image": "https://www.themoviedb.org/t/p/w1280/AdYr4DjOgXvDUMwu6vEhZy1Rnxk.jpg",
         "youtube_url": "https://youtu.be/A9BCtrziWtg",
         "genres": [
@@ -55,5 +55,20 @@
         ],
         "description": "Maomao lived a peaceful life with her apothecary father. Until one day, she's sold as a lowly servant to the emperor's palace. But she wasn't meant for a compliant life among royalty. So when imperial heirs fall ill, she decides to step in and find a cure! This catches the eye of Jinshi, a handsome palace official who promotes her. Now, she's making a name for herself solving medical mysteries!",
         "id": 4
+    },
+    {
+        "title": "Ted Lasso 4 season",
+        "type": "Series",
+        "year": 2026,
+        "status": "Watched",
+        "image": "https://www.themoviedb.org/t/p/w1280/uRHsiw1wLxPHFXkkv4Ix1s0O6f4.jpg",
+        "youtube_url": "https://youtu.be/GACU1N9hg5o",
+        "genres": [
+            "Comedy",
+            "Sport",
+            "Drama"
+        ],
+        "description": "American college football coach Ted Lasso is hired to manage AFC Richmond, a struggling English soccer club, and must win over skeptical players, staff, and fans.",
+        "id": 5
     }
 ]
